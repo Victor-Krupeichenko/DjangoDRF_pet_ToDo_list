@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if register_user %}
+        {{ title }}
+    {% else %}
+        {{ title }}
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="d-grid gap-2 mt-2">
+            <button type="submit" class="btn btn-primary btn-block btn-sm">
+                {% if register_user %}Register User{% else %}Login user{% endif %}
+            </button>
+        </div>
+    </form>
+{% endblock %}
