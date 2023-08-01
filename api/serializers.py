@@ -18,7 +18,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        fields = ["user", "title", "description", "date_create", "execute_status"]
+        fields = ["user", "id", "title", "description", "date_create", "execute_status"]
 
 
 class RegisterUserSerializator(serializers.Serializer):
@@ -53,3 +53,19 @@ class LoginUserSerializator(serializers.Serializer):
         if not User.objects.filter(username=value).exists():
             raise serializers.ValidationError(f"User: {value} not found")
         return value
+
+
+class TaskCreateSerializer(serializers.ModelSerializer):
+    """Task create"""
+    class Meta:
+        model = Task
+        fields = ["title", "description"]
+
+    def validate(self, attrs):
+        len_title = len(attrs.get("title").replace(" ", ""))
+        len_description = len(attrs.get("description"))
+        if len_title < 3 or len_title > 100:
+            raise serializers.ValidationError("Invalid string size")
+        if len_description > 250:
+            raise serializers.ValidationError("Invalid string size")
+        return attrs
