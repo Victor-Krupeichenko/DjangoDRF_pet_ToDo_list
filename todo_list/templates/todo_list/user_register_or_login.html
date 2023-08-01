@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}
     {% if register_user %}
         {{ title }}
@@ -10,6 +10,9 @@
 
 
 {% block content %}
+    <div class="text-center mb-4">
+        <img src="{% static 'todo_list/images/login.png' %}" alt="" width="100">
+    </div>
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}

@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}
     {{ title }}
 {% endblock %}
 
 {% block content %}
+    <div class="text-center mb-4">
+        <img src="{% static 'todo_list/images/todo.png' %}" alt="" width="100">
+    </div>
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
