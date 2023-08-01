@@ -6,7 +6,7 @@ class Task(models.Model):
     """Table Task"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
     title = models.CharField(max_length=100, verbose_name="Название")
-    description = models.CharField(max_length=250, verbose_name="Описание задачи")
+    description = models.CharField(max_length=250, verbose_name="Описание задачи", blank=True)
     date_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     execute_status = models.BooleanField(default=False, verbose_name="Статус выполнения")
 
