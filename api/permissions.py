@@ -1,7 +1,8 @@
 from rest_framework import permissions
 
 
-class IsOvnerOnlyRead(permissions.BasePermission):
+class IsOvnerReadChange(permissions.BasePermission):
+    """Разрешение на получение списка задач и изменения статуса задачи"""
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:  # Разрешаем доступ для всех методов, кроме POST, PUT и DELETE
             return True
