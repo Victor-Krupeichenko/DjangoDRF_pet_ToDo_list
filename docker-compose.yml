@@ -1,0 +1,47 @@
+version: "3.7"
+services:
+  django_drf_database:
+    image: postgres:15.3
+    container_name: django_drf_database
+    command: -p 1223
+    ports:
+      - "5432:1223"
+    env_file:
+      - .env
+    restart: always
+    networks:
+      - drf_django
+  django_pet_drf:
+    build:
+      context: .
+    container_name: django_pet_drf
+    volumes:
+      - static:/static
+    env_file:
+      - .env
+    command:  [ "/app/docker_start/start.sh" ]
+    ports:
+      - "8017:8017"
+    depends_on:
+      - django_drf_database
+    restart: always
+    networks:
+      - drf_django
+  nginx:
+    image: nginx:1.25.1-alpine
+    volumes:
+      - static:/static
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - django_pet_drf
+    networks:
+      - drf_django
+networks:
+  drf_django:
+    name: drf_django
+    driver: bridge
+
+volumes:
+  static:
